@@ -1,0 +1,7 @@
+The destination name is too long (365), reducing to 236
+--2024-05-28 10:47:16--  https://cdn.inst-fs-syd-prod.inscloudgate.net/869e1f41-eb75-458c-9eec-0296719e4688/slow_functions.h?token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImtpZCI6ImNkbiJ9.eyJyZXNvdXJjZSI6Ii84NjllMWY0MS1lYjc1LTQ1OGMtOWVlYy0wMjk2NzE5ZTQ2ODgvc2xvd19mdW5jdGlvbnMuaCIsInRlbmFudCI6ImNhbnZhcyIsInVzZXJfaWQiOiI3MDM2MDAwMDAwMDE1OTg2NCIsImlhdCI6MTcxNjg4NDgyNywiZXhwIjoxNzE2OTcxMjI3fQ.vtFD3c0N_Qk1kImPx7t00y9JlPGFxlBuPzX6kMW9UYEcWNjsHLlByHWOM0J2-vnknwboXFRULslYe4SwDjJNWQ
+Resolving cdn.inst-fs-syd-prod.inscloudgate.net (cdn.inst-fs-syd-prod.inscloudgate.net)... 18.155.88.25, 18.155.88.73, 18.155.88.50, ...
+Connecting to cdn.inst-fs-syd-prod.inscloudgate.net (cdn.inst-fs-syd-prod.inscloudgate.net)|18.155.88.25|:443... connected.
+HTTP request sent, awaiting response... 401 Unauthorized
+
+Username/Password Authentication Failed.
