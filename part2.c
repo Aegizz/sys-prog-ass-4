@@ -5,19 +5,77 @@
 
 // How nice of me to include a global that tells you how many commands there were :)
 int total_commands = 0;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond_writer = PTHREAD_COND_INITIALIZER;
+pthread_cond_t cond_reader = PTHREAD_COND_INITIALIZER;
 
+// Shared index to keep track of the current command to write
+int current_command = 0;
+
+// Shared flag indicating if data has been written
+int data_written = 0;
 
 // ####################################################################################
 // ## Please write some code in the following two functions
 
 void * writer(void * in_ptr)
 {
-	//must include bad_write;
+    char **commands = (char **)in_ptr;
+    while (current_command < total_commands) {
+        // Lock the mutex before writing
+        pthread_mutex_lock(&mutex);
+
+        // Wait until data has been read before writing new data
+        while (data_written) {
+            pthread_cond_wait(&cond_writer, &mutex);
+        }
+
+        // Call bad_write with the current command
+        bad_write(commands[current_command]);
+        current_command++;
+
+        // Update the flag to indicate data has been written
+        data_written = 1;
+
+        // Signal the reader that data is available
+        pthread_cond_signal(&cond_reader);
+
+        // Unlock the mutex
+        pthread_mutex_unlock(&mutex);
+    }
+
+    return NULL;
 }
 
 void * reader(void * empty)
 {
-	//must include bad_read
+	while (1) {
+			// Lock the mutex before reading
+			pthread_mutex_lock(&mutex);
+
+			// Wait until there is data to read
+			while (!data_written) {
+				pthread_cond_wait(&cond_reader, &mutex);
+			}
+
+			// Call bad_read
+			bad_read(NULL);
+
+			// Update the flag to indicate data has been read
+			data_written = 0;
+
+			// Signal the writer that it can write new data
+			pthread_cond_signal(&cond_writer);
+
+			// Unlock the mutex
+			pthread_mutex_unlock(&mutex);
+
+			// Break the loop if all commands have been processed
+			if (current_command >= total_commands) {
+				break;
+			}
+		}
+		return NULL;
 }
 
 
